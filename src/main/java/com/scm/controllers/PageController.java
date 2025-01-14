@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.scm.entities.User;
 import com.scm.forms.UserForm;
+import com.scm.helpers.Message;
+import com.scm.helpers.MessageType;
 import com.scm.services.UserService;
 
 import jakarta.servlet.http.HttpSession;
@@ -103,9 +105,12 @@ public class PageController {
         System.out.println("User saved: " + savedUser);
 
         // message = "Registration successful"
-        // Message message = 
+        Message message = Message.builder()
+                                .content("Registration Successful")
+                                .type(MessageType.green)
+                                .build();
 
-        session.setAttribute("message", "Registration Successful");
+        session.setAttribute("message", message);
         
         // redirect to login page
         return "redirect:/register";
