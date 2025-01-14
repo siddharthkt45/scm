@@ -3,6 +3,7 @@ package com.scm.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.scm.entities.User;
@@ -12,6 +13,7 @@ import com.scm.helpers.MessageType;
 import com.scm.services.UserService;
 
 import jakarta.servlet.http.HttpSession;
+import jakarta.validation.Valid;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -71,7 +73,9 @@ public class PageController {
 
     // do-register route
     @PostMapping("/do-register")
-    public String processRegister(@ModelAttribute UserForm userForm, HttpSession session) {
+    public String processRegister(@Valid @ModelAttribute UserForm userForm, 
+                                    BindingResult rBindingResult, 
+                                    HttpSession session) {
         System.out.println("Processing registration...");
 
         // fetch form data
@@ -80,6 +84,10 @@ public class PageController {
         // UserForm class
 
         // validate form data
+        if (rBindingResult.hasErrors()) {
+            return "register";
+        }
+
         
         // map the UserForm to User entity --- commenting the below code since it doesn't pass default values
         // User user = User.builder()
