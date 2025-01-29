@@ -25,6 +25,13 @@ public class PageController {
     @Autowired
     private UserService userService;
 
+    // base route
+    @GetMapping("/")
+    public String index() {
+        // redirects the base route to home page
+        return "home";
+    }
+
     // home route
     @RequestMapping("/home")
     public String home(Model model) {
